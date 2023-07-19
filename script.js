@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -23,14 +23,14 @@ const renderCountry = function (data, className = '') {
           </article>
         `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  //   countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  //   countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
-
+*/
 ///////////////////////////////////////
 // https://countries-api-836d.onrender.com/countries/
 /*
@@ -192,7 +192,7 @@ setTimeout(() => {
 //       renderCountry(data[0]);
 //     });
 // };
-
+/*
 const getJSON = function (url, errorMsg = 'Something went wrong') {
   return fetch(url).then(response => {
     if (!response.ok)
@@ -200,7 +200,7 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
     return response.json();
   });
 };
-
+*/
 // const getCountryData = function (country) {
 //   // Country 1
 //   fetch(`https://restcountries.com/v2/name/${country}`)
@@ -237,7 +237,7 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 //       countriesContainer.style.opacity = 1;
 //     });
 // };
-
+/*
 const getCountryData = function (country) {
   // Country 1
   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
@@ -269,3 +269,113 @@ btn.addEventListener('click', function () {
 });
 
 getCountryData('australia');
+*/
+
+/////////////////////////////////////////////////////////////
+// Async JS
+// Coding Challenge #1
+// const request = fetch(
+//   'https://geocode.xyz/52.508,13.381?geoit=json&auth=your_api_key'
+// );
+
+// const renderLocation = function () {};
+// AIzaSyDbrBcgQSRkOELmDfcGA289TRwms9-bwtY
+/*
+const whereAmI = function (lat, lng) {
+  fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=163701317952885356510x100118`
+    // `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDbrBcgQSRkOELmDfcGA289TRwms9-bwtY`
+  )
+    .then(response => {
+      console.log(response);
+      if (!response.ok)
+        throw new Error(`Problem with geocoding ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      //   const city = data.results?.[7].formatted_address;
+      //   console.log(`You are in ${city}.`);
+      console.log(`You are in ${data.city}, ${data.country}`);
+
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+      //   return fetch(`https://restcountries.com/v3.1/name/eesti/${data.country}`);
+    })
+
+    .then(response => {
+      //   console.log(response);
+
+      if (!response.ok)
+        throw new Error(`Country is not found (${response.status})`);
+      return response.json();
+    })
+    .then(data => renderCountry(data[0]))
+    .catch(err => console.error(`${err.message}`));
+};
+whereAmI(52.508, 13.381);
+whereAmI(19.037, 72.873);
+whereAmI(-33.933, 18.474);
+*/
+//////////////////////////////////////////////////////////////
+// EVENT LOOP IN PRACTICE
+// console.log('Test start');
+// setTimeout(() => console.log('0 sec later'), 0);
+// Promise.resolve('Resolved promise 1').then(res => console.log(res));
+
+// console.log('Test end');
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery draw is happening 🔮');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('YOU WIN 💰');
+    } else {
+      reject(new Error('You lost your money 😥'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+const wait = seconds => {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log('1 second past');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 second past');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 second past');
+    return wait(1);
+  })
+  .then(() => console.log('4 second past'));
+
+//   setTimeout(() => {
+//   console.log('I am home');
+//   setTimeout(() => {
+//     console.log('Who is home?');
+//     setTimeout(() => {
+//       console.log('Is anyone home?');
+//       setTimeout(() => {
+//         console.log('I wanna eat');
+//         setTimeout(() => {
+//           console.log('Let have fun');
+//           setTimeout(() => {
+//             console.log('The end of an era');
+//           }, 1000);
+//         }, 1000);
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('Probelm!')).catch(x => console.error(x));
