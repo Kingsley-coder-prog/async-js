@@ -278,12 +278,11 @@ const getCountryData = function (country) {
 // );
 
 // const renderLocation = function () {};
-// AIzaSyDbrBcgQSRkOELmDfcGA289TRwms9-bwtY
 
 // const whereAmI1 = function (lat, lng) {
 //   fetch(
 //     `https://geocode.xyz/${lat},${lng}?geoit=json&auth=163701317952885356510x100118`
-//     // `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDbrBcgQSRkOELmDfcGA289TRwms9-bwtY`
+//
 //   )
 //     .then(response => {
 //       console.log(response);
@@ -379,17 +378,18 @@ const getCountryData = function (country) {
 // Promise.resolve('abc').then(x => console.log(x));
 // Promise.reject(new Error('Probelm!')).catch(x => console.error(x));
 
-const getPosition = function () {
-  return new Promise((resolve, reject) => {
-    // navigator.geolocation.getCurrentPosition(
-    //   position => resolve(position),
-    //   err => reject(err)
-    // );
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+// const getPosition = function () {
+//   return new Promise((resolve, reject) => {
+//     // navigator.geolocation.getCurrentPosition(
+//     //   position => resolve(position),
+//     //   err => reject(err)
+//     // );
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
 // getPosition().then(pos => console.log(pos));
 
+/*
 const whereAmI = function () {
   getPosition()
     .then(pos => {
@@ -422,7 +422,7 @@ const whereAmI = function () {
 };
 
 btn.addEventListener('click', whereAmI);
-
+*/
 //////////////////////////////////////////////////////
 // Coding Challenge 3
 /*
@@ -472,3 +472,9 @@ createImage('img/img-1.jpg')
   .catch(err => console.error(err));
 */
 //////////////////////////////////////////////////////////////
+const whereAmI = async function (country) {
+  const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+  console.log(res);
+};
+whereAmI('nigeria');
+console.log('FIRST');
